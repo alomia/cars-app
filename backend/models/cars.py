@@ -4,12 +4,12 @@ from typing import Optional
 
 
 class Car(Document):
-    brand:  str = Field(..., min_length=3)
-    make:   str = Field(..., min_length=3)
-    year:   int = Field(...)
-    price:  int = Field(...)
-    km:     int = Field(...)
-    cm3:    int = Field(...)
+    brand: str = Field(..., min_length=3)
+    make: str = Field(..., min_length=3)
+    year: int = Field(...)
+    price: int = Field(...)
+    km: int = Field(...)
+    cm3: int = Field(...)
 
     class Settings:
         name = "cars"

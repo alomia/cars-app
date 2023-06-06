@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 from database.connection import Settings
+from routes.cars import car_router
 
 import uvicorn
 
@@ -8,6 +9,8 @@ app = FastAPI()
 
 settings = Settings()
 
+# Register routes
+app.include_router(car_router, prefix="/car")
 
 @app.on_event("startup")
 async def init_db():
