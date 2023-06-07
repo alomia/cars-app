@@ -31,10 +31,12 @@ class Database:
             return doc
         return False
 
-    async def get_all(self) -> List[Any]:
-        docs = await self.model.find_all().to_list()
+    async def get_all(self, page: int) -> List[Any]:
+        results_per_page = 25
+        skip = (page-1) * results_per_page
+        docs = await self.model.find_all().skip(skip).limit(results_per_page).to_list()
         return docs
-    
+
     async def update(self, id: PydanticObjectId, body: BaseModel) -> Any:
         doc_id = id
         des_body = body.dict()

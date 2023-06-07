@@ -1,6 +1,6 @@
 from typing import List
 from beanie import PydanticObjectId
-from fastapi import APIRouter, Body, HTTPException, status
+from fastapi import APIRouter, Body, Query, HTTPException, status
 
 from models.cars import Car
 from database.connection import Database
@@ -13,8 +13,8 @@ car_database = Database(Car)
 
 
 @car_router.get("/", response_description="List all cars", response_model=List[Car])
-async def retrieve_all_car() -> List[Car]:
-    cars = await car_database.get_all()
+async def retrieve_all_car(page: int = Query(1, ge=1)) -> List[Car]:
+    cars = await car_database.get_all(page=page)
     return cars
 
 
