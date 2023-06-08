@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from beanie import PydanticObjectId
 from fastapi import APIRouter, Body, Query, HTTPException, status
 
@@ -13,8 +13,8 @@ car_database = Database(Car)
 
 
 @car_router.get("/", response_description="List all cars", response_model=List[Car])
-async def retrieve_all_car(page: int = Query(1, ge=1)) -> List[Car]:
-    cars = await car_database.get_all(page=page)
+async def retrieve_all_car(min_price: int = Query(0), max_price: int = Query(100000), brand: Optional[str] = Query(None), page: int = Query(1, ge=1)) -> List[Car]:
+    cars = await car_database.get_all(min_price=min_price, max_price=max_price, brand=brand, page=page)
     return cars
 
 
