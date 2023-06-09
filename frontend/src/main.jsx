@@ -17,11 +17,11 @@ const router = createBrowserRouter([
     element: <Cars />,
   },
   {
-    path: "cars/new",
+    path: "new",
     element: <NewCar />,
   },
   {
-    path: "cars/:id",
+    path: "car/:id",
     element: <Car />,
   },
 ]);
