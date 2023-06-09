@@ -31,10 +31,13 @@ class Database:
             return doc
         return False
 
-    async def get_all(self, page: int) -> List[Any]:
+    async def get_all(self, min_price: int, max_price: int, brand: Optional[str], page: int) -> List[Any]:
         results_per_page = 25
         skip = (page-1) * results_per_page
-        docs = await self.model.find_all().skip(skip).limit(results_per_page).to_list()
+        query = {"price": {"$gte": min_price, "$lte": max_price}}
+        if brand:
+            query["brand"] = brand
+        docs = await self.model.find(query).skip(skip).limit(results_per_page).to_list()
         return docs
 
     async def update(self, id: PydanticObjectId, body: BaseModel) -> Any:
