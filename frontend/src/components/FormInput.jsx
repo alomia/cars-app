@@ -2,8 +2,8 @@ function FormInput(props) {
   const { label, placeholder, type, onChange, name } = props;
 
   return (
-    <form className="formInput my-2 flex flex-row items-center">
-      <label className="font-small">{label}</label>
+    <div className="formInput my-2 flex flex-row items-center">
+      <label className="font-small text-center w-20">{label}</label>
       <input
         className="p-1 mx-1 rounded-md border-2 border-gray-300 flex-1"
         placeholder={placeholder}
@@ -12,7 +12,7 @@ function FormInput(props) {
         onChange={onChange}
         autoComplete="off"
       />
-    </form>
+    </div>
   );
 }
 
