@@ -25,3 +25,12 @@ class Car(Document):
                 "cm3": 2000,
             }
         }
+
+
+class CarUpdate(BaseModel):
+    brand:  Optional[str]
+    make:   Optional[str]
+    year:   Optional[int]
+    price:  Optional[int]
+    km:     Optional[int]
+    cm3:    Optional[int]
