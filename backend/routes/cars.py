@@ -2,7 +2,7 @@ from typing import List, Optional
 from beanie import PydanticObjectId
 from fastapi import APIRouter, Body, Query, HTTPException, status
 
-from models.cars import Car
+from models.cars import Car, CarUpdate
 from database.connection import Database
 
 car_router = APIRouter(
@@ -37,8 +37,8 @@ async def create_car(car: Car = Body(...)) -> dict:
     }
 
 
-@car_router.put("/{id}", response_description="Update car")
-async def updated_car(id: PydanticObjectId, car: Car = Body(...)) -> Car:
+@car_router.patch("/{id}", response_description="Update car")
+async def updated_car(id: PydanticObjectId, car: CarUpdate = Body(...)) -> Car:
     updated_car = await car_database.update(id, car)
     if not updated_car:
         raise HTTPException(
