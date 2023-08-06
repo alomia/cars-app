@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from database.connection import Settings
 from routes.cars import car_router
+from routes.users import user_router
 
 import uvicorn
 
@@ -31,6 +32,7 @@ app.add_middleware(
 # Register routes
 
 app.include_router(car_router, prefix="/car")
+app.include_router(user_router, prefix="/user")
 
 
 @app.on_event("startup")
