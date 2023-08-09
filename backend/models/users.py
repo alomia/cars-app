@@ -1,6 +1,6 @@
+from enum import Enum
 from beanie import Document
 from pydantic import EmailStr, Field
-from enum import Enum
 
 
 class Role(str, Enum):
