@@ -1,6 +1,6 @@
 from enum import Enum
 from beanie import Document
-from pydantic import EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field
 
 
 class Role(str, Enum):
@@ -26,3 +26,8 @@ class User(Document):
                 "role": "SALESPERSON",
             }
         }
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str
