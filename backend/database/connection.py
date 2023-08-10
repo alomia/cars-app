@@ -4,14 +4,16 @@ from pydantic import BaseSettings, BaseModel
 from motor.motor_asyncio import AsyncIOMotorClient
 
 from models.cars import Car
+from models.users import User
 
 
 class Settings(BaseSettings):
     DATABASE_URL: Optional[str] = None
+    SECRET_KEY: Optional[str] = None
 
     async def initialize_database(self):
         client = AsyncIOMotorClient(self.DATABASE_URL)
-        await init_beanie(database=client.get_default_database(), document_models=[Car])
+        await init_beanie(database=client.get_default_database(), document_models=[Car, User])
 
     class Config:
         env_file = ".env"

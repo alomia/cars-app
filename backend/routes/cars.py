@@ -1,9 +1,10 @@
 from typing import List, Optional
 from beanie import PydanticObjectId
-from fastapi import APIRouter, Body, Query, HTTPException, status
+from fastapi import APIRouter, Body, Depends, Query, HTTPException, status
 
 from models.cars import Car, CarUpdate
 from database.connection import Database
+from auth.authenticate import authenticate
 
 car_router = APIRouter(
     tags=["Car"]
@@ -30,7 +31,7 @@ async def retrieve_car(id: PydanticObjectId) -> Car:
 
 
 @car_router.post("/", response_description="Add new car")
-async def create_car(car: Car = Body(...)) -> dict:
+async def create_car(car: Car = Body(...), user: str = Depends(authenticate)) -> dict:
     await car_database.save(car)
     return {
         "message": "Car created successfully"
@@ -38,7 +39,7 @@ async def create_car(car: Car = Body(...)) -> dict:
 
 
 @car_router.patch("/{id}", response_description="Update car")
-async def updated_car(id: PydanticObjectId, car: CarUpdate = Body(...)) -> Car:
+async def updated_car(id: PydanticObjectId, car: CarUpdate = Body(...), user: str = Depends(authenticate)) -> Car:
     updated_car = await car_database.update(id, car)
     if not updated_car:
         raise HTTPException(
@@ -49,7 +50,7 @@ async def updated_car(id: PydanticObjectId, car: CarUpdate = Body(...)) -> Car:
 
 
 @car_router.delete("/{id}", response_description="Delete car")
-async def delete_car(id: PydanticObjectId) -> dict:
+async def delete_car(id: PydanticObjectId, user: str = Depends(authenticate)) -> dict:
     car = await car_database.delete(id)
     if not car:
         raise HTTPException(
