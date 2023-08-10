@@ -2,8 +2,8 @@ from fastapi import APIRouter, Body, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 
 from database.connection import Database
-from auth.hash_password import HashPassword
 from models.users import User, TokenResponse
+from auth.hash_password import HashPassword
 from auth.jwt_handler import create_access_token
 
 user_router = APIRouter(
@@ -43,7 +43,7 @@ async def sign_user_in(user: OAuth2PasswordRequestForm = Depends()) -> dict:
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User with email does not exist.",
         )
-    
+
     if hash_password.verify_hash(user.password, user_exist.password):
         access_token = create_access_token(user_exist.email)
         return {
